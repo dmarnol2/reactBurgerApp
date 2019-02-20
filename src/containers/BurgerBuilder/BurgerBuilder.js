@@ -1,12 +1,14 @@
 import React, {Component} from 'react';
-import Aux from '../../HOC/Aux';
+
+import Burger from '../../components/Burger/Burger'
+import Aux from '../../higherOrderComp/Aux';
 
 class BurgerBuilder extends Component{
     render(){  // important lifecycle method telling react what you want to displsy
         return(
             // need wrapping component because we are returning 2 adjacent components
             <Aux>
-                <div>Graphical rep of Burger component</div>
+                <Burger/>
                 <div>Build Controls component</div>
             </Aux>
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import Aux from '../../HOC/Aux'; // dont add file extension, build does that for us
+import Aux from '../../higherOrderComp/Aux';
 import classes from './Layout.css';
 //this component allows us to use a wrapper around core component that we output to screen
 // get props as an argument
