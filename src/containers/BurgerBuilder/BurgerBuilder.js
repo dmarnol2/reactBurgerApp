@@ -26,7 +26,24 @@ class BurgerBuilder extends Component{
         cheese: 0,
         meat: 0
     },
+    purchasable:false, // activates or disables order button, it is sum of ingredients
     totalPrice: 4
+    }
+
+    updatePurchaseState(ingredients){
+        // we are using passed in ingredients than what is in state
+        // const ingredients = {
+        //     ...this.state.ingredients
+        // };
+        const sum = Object.keys(ingredients)
+            .map(igKey => {
+                return ingredients[igKey]  // returning ingredients and value for given key
+
+            })
+            .reduce((sum, element) => {
+                return sum+element;
+            },0);
+            this.setState({purchasable: sum>0})
     }
 
     addIngredientHandler = (type) => {
@@ -44,18 +61,53 @@ class BurgerBuilder extends Component{
         this.setState({totalPrice:newPrice, ingredients: updatedIngredients});
         console.log(oldPrice+" oldPrice")
         console.log("after set state: "+this.state.totalPrice)
+        this.updatePurchaseState(updatedIngredients);
     }
 
     removeIngredientHandler= (type) => {
-
+        console.log("in addIngredientHandler")
+        const oldCount = this.state.ingredients[type];
+        if(oldCount<=0){  // checks and make sure that there is an ingredient to remove if not then return
+            return;         //cant create array to render from a negative value
+        }
+        const updatedCount = oldCount -1;
+        // Do not want to mutate state directly so use process below, create new object then update state with it
+        const updatedIngredients = {
+            ...this.state.ingredients
+        };
+        updatedIngredients[type]= updatedCount;
+        const priceDeduction = INGREDIENT_PRICES[type];
+        const oldPrice = this.state.totalPrice;
+        const newPrice = oldPrice - priceDeduction;
+        this.setState({totalPrice:newPrice, ingredients: updatedIngredients});
+        console.log(oldPrice+" oldPrice")
+        console.log("after set state: "+this.state.totalPrice)
+        this.updatePurchaseState(updatedIngredients);
     }
 
     render(){  // important lifecycle method telling react what you want to displsy
+        const disabledInfo = {  // created to control buttons to be disabled
+            ...this.state.ingredients   // copies object of state.ingredients into disabledInfo in immutable way
+        };
+        // loop through all keys in disabledInfo and check if count <=0, if so disable button
+        for (let key in disabledInfo){
+            //assign value of true/false
+            disabledInfo[key]=disabledInfo[key]<=0 //pass to build controls
+            //structure is {salad:true, meat:false etc}
+        }
+        // const disableOrderButton = this.state.purchasable;
+        
         return(
             // need wrapping component because we are returning 2 adjacent components
             <Aux>
                 <Burger ingredients={this.state.ingredients}/>
-                <BuildControls ingredientAdded={this.addIngredientHandler}/>
+                <BuildControls 
+                    ingredientAdded={this.addIngredientHandler}
+                    ingredientRemoved={this.removeIngredientHandler}
+                    disabled={disabledInfo}
+                    price={this.state.totalPrice}
+                    purchasable={this.state.purchasable}
+                />
             </Aux>
 
 

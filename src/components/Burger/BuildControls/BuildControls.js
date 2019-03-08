@@ -11,13 +11,20 @@ const controls = [
 
 const buildControls = (props) => (
     <div className={classes.BuildControls}>
+    <p>Burger Price: <strong>{props.price.toFixed(2)}</strong></p> 
+        {/* Looping through controls with use of map fn */}
         {controls.map(ctrl=>(
             <BuildControl 
             key={ctrl.label} 
             label={ctrl.label}
             //we need to keep track of which type this BuildControl is OF
-            added={()=>props.ingredientAdded(ctrl.type)}/> // pass back ctrl.type
+            added={()=>props.ingredientAdded(ctrl.type)}
+            removed={()=>props.ingredientRemoved(ctrl.type)}
+            // disabled for a given control type, disabled is object not function
+            disabled={props.disabled[ctrl.type]}/> 
         ))}
+        <button className={classes.OrderButton} 
+            disabled={!props.purchasable}>ORDER NOW</button>
     </div>
 
 );
