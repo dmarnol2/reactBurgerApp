@@ -93,6 +93,10 @@ class BurgerBuilder extends Component{
         this.updatePurchaseState(updatedIngredients);
     }
 
+    purchaseCanceledHandler=()=>{
+        this.setState({purchasing:false})
+    }
+
     render(){  // important lifecycle method telling react what you want to displsy
         const disabledInfo = {  // created to control buttons to be disabled
             ...this.state.ingredients   // copies object of state.ingredients into disabledInfo in immutable way
@@ -109,7 +113,7 @@ class BurgerBuilder extends Component{
             // need wrapping component because we are returning 2 adjacent components
             <Aux>
                 {/* Modal will not be visible all the time */}
-                <Modal show={this.state.purchasing}>
+                <Modal show={this.state.purchasing} modalClosed={this.purchaseCanceledHandler}>
                     <OrderSummary ingredients={this.state.ingredients}/>
                 </Modal> 
 
@@ -121,6 +125,7 @@ class BurgerBuilder extends Component{
                     ordered = {this.purchaseHandler}
                     price={this.state.totalPrice}
                     purchasable={this.state.purchasable}
+                    
                 />
             </Aux>
 
