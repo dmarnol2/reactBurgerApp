@@ -1,0 +1,31 @@
+import React from 'react';
+import Aux from '../../HOC/Aux';
+
+const orderSummary = (props) => {
+    // const ingredientsSummary = props.ingredients; // this is an object want an array to use below
+    const ingredientsSummary = Object.keys(props.ingredients)
+        .map(igKey => {
+            // double curly brace is used for JS, cap 1st letter of ingredient
+            // return list of igKey which is ingredient and props.ingredients[igKey] which is value of the igKey
+            return (<li key={igKey}>
+                    <span style={{textTransform:'capitalize'}}>{igKey}</span>:{props.ingredients[igKey]}
+                    </li>
+                    )
+            })
+    // need wrapping div since we have multiple elements and we already
+    // have one in AUX
+    return(
+    <Aux>
+        <h3>Your Order</h3>
+        <p>A burger with the following ingredients:</p>
+        <ul>
+            {/* using default css styling of Aux */}
+            {ingredientsSummary}
+        </ul>
+        <p>Continue to checkout?</p>
+    </Aux>
+    );
+
+};
+
+export default orderSummary;

@@ -3,6 +3,8 @@ import React, {Component} from 'react';
 import Burger from '../../components/Burger/Burger'
 import Aux from '../../higherOrderComp/Aux';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
+import Modal from '../../components/UI/Modal/Modal';
+import OrderSummary from '../../components/OrderSummary/OrderSummary';
 
 const INGREDIENT_PRICES = {
     salad: .5,
@@ -27,7 +29,13 @@ class BurgerBuilder extends Component{
         meat: 0
     },
     purchasable:false, // activates or disables order button, it is sum of ingredients
-    totalPrice: 4
+    totalPrice: 4,
+    purchasing: false  // this is used to show or hide the modal, show after order button was clicked
+    }
+
+    //needs to be arrow fn
+    purchaseHandler=()=>{
+        this.setState({purchasing:true});
     }
 
     updatePurchaseState(ingredients){
@@ -100,11 +108,17 @@ class BurgerBuilder extends Component{
         return(
             // need wrapping component because we are returning 2 adjacent components
             <Aux>
+                {/* Modal will not be visible all the time */}
+                <Modal show={this.state.purchasing}>
+                    <OrderSummary ingredients={this.state.ingredients}/>
+                </Modal> 
+
                 <Burger ingredients={this.state.ingredients}/>
                 <BuildControls 
                     ingredientAdded={this.addIngredientHandler}
                     ingredientRemoved={this.removeIngredientHandler}
                     disabled={disabledInfo}
+                    ordered = {this.purchaseHandler}
                     price={this.state.totalPrice}
                     purchasable={this.state.purchasable}
                 />
