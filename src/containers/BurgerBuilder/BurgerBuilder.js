@@ -97,6 +97,10 @@ class BurgerBuilder extends Component{
         this.setState({purchasing:false})
     }
 
+    purchaseContinueHandler=()=>{
+        alert("You continued");
+    }
+
     render(){  // important lifecycle method telling react what you want to displsy
         const disabledInfo = {  // created to control buttons to be disabled
             ...this.state.ingredients   // copies object of state.ingredients into disabledInfo in immutable way
@@ -114,7 +118,11 @@ class BurgerBuilder extends Component{
             <Aux>
                 {/* Modal will not be visible all the time */}
                 <Modal show={this.state.purchasing} modalClosed={this.purchaseCanceledHandler}>
-                    <OrderSummary ingredients={this.state.ingredients}/>
+                    <OrderSummary 
+                        purchaseContinued={this.purchaseContinueHandler}
+                        purchaseCancelled={this.purchaseCanceledHandler}
+                        ingredients={this.state.ingredients}
+                        price={this.state.totalPrice}/>
                 </Modal> 
 
                 <Burger ingredients={this.state.ingredients}/>
