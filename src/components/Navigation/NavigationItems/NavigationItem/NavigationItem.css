@@ -1,17 +1,26 @@
+/* DONT NEED MEDIA QUERY FOR MOBILE BECAUSE WE ARE DEV MOBILE FIRST */
+/* Commented out sections reflect changes from desktop to mobile that shows below */
+
 .NavigationItem {
-    margin:0;
+    /* margin:0; */
+    margin: 10px 0;
     box-sizing: border-box;
-    display: flex;
-    height:100%;
-    align-items: center;
+    /* display: flex; */
+    display: block;
+    /* height:100%; */
+    width:100%;
+    /* align-items: center; */
 }
 
 .NavigationItem a {
-     color: white;
+    /* the color of the links */
+     /* color: white;   */
+     color: #8f5c2c;
      text-decoration: none;
-     height: 100%;
-     padding: 16px 10px;
-     border-bottom: 4px solid transparent;
+     /* height: 100%; */
+     width: 100%;
+     /* padding: 16px 10px;
+     border-bottom: 4px solid transparent; */
      box-sizing: border-box;
      display: block;
 }
@@ -19,8 +28,45 @@
 .NavigationItem a:hover,
 .NavigationItem a:active,
 .NavigationItem a.active{
-    background-color: #8f5c2c;
-    color: white;
-    border-bottom: 4px solid #40a4c8;
+    /* background-color: #8f5c2c; */
+    /* color: white; */
+    color: #40a4c8
+    /* border-bottom: 4px solid #40a4c8; */
+
+}
+/* FOR DESKTOP */
+@media (min-width:500px){
+
+    .NavigationItem {
+        margin:0;
+        /* media styling merges with normal styling so we can remove duplicates */
+        /* media query just overrides values specified */
+        /* box-sizing: border-box; */
+        display: flex;
+        height:100%;
+         /* overriding width */
+         width:auto;
+        align-items: center;
+    }
+    
+    .NavigationItem a {
+         color: white;
+         text-decoration: none;
+         height: 100%;
+        
+         padding: 16px 10px;
+         border-bottom: 4px solid transparent;
+         /* box-sizing: border-box;
+         display: block; */
+    }
+    
+    .NavigationItem a:hover,
+    .NavigationItem a:active,
+    .NavigationItem a.active{
+        background-color: #8f5c2c;
+        color: white;
+        border-bottom: 4px solid #40a4c8;
+    
+    }
 
 }
